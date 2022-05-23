@@ -1,8 +1,10 @@
 rootProject.name = 'CameraScannerDocument'
 include ':react-native-document-scanner'
 project(':react-native-document-scanner').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-document-scanner/android')
+
 include ':openCVLibrary310'
 project(':openCVLibrary310').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-document-scanner/android/openCVLibrary310')
+
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
 include ':app'
 includeBuild('../node_modules/react-native-gradle-plugin')
