@@ -5639,9 +5639,9 @@ react-native-codegen@^0.0.17:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-"react-native-document-scanner@https://github.com/AugustoPinheiro/react-native-document-scanner":
+"react-native-document-scanner@https://github.com/Michaelvilleneuve/react-native-document-scanner":
   version "1.4.3"
-  resolved "https://github.com/AugustoPinheiro/react-native-document-scanner#1c03ac3d7f806dd2c052362ac947cb90096fbc6f"
+  resolved "https://github.com/Michaelvilleneuve/react-native-document-scanner#1c03ac3d7f806dd2c052362ac947cb90096fbc6f"
   dependencies:
     react "16.0.0-beta.5"
 
