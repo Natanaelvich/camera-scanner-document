@@ -3,6 +3,7 @@ package com.camerascannerdocument;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
+import com.documentscanner.DocumentScannerPackage;
 
 public class MainActivity extends ReactActivity {
 
