@@ -1,8 +1,8 @@
 module.exports = {
-  dependency: {
-    platforms: {
-      android: {
-        manifestPath: 'src/main/AndroidManifest.xml',
+  dependencies: {
+    'react-native-document-scanner': {
+      platforms: {
+        android: null, // disable Android platform, other platforms will still autolink if provided
       },
     },
   },
