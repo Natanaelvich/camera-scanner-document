@@ -47,13 +47,34 @@ const App = () => {
     };
   }
 
+  function onDeviceSetup(deviceDetails) {
+    const {
+      hasCamera,
+      permissionToUseCamera,
+      flashIsAvailable,
+      previewHeightPercent,
+      previewWidthPercent,
+    } = deviceDetails;
+
+    //   setloadingCamera(false)
+    setDevice({
+      initialized: true,
+      hasCamera,
+      permissionToUseCamera,
+      flashIsAvailable,
+      previewHeightPercent: previewHeightPercent || 1,
+      previewWidthPercent: previewWidthPercent || 1,
+    });
+  }
+
   return (
     <View style={{flex: 1}}>
       <Scanner
         onPictureProcessed={handleOnPictureProcessed}
-        onRectangleDetected={({detectedRectangle}) => {
-          setDetectedRectangle(detectedRectangle);
-        }}
+        onRectangleDetected={({detectedRectangle}) =>
+          setDetectedRectangle(detectedRectangle)
+        }
+        onDeviceSetup={onDeviceSetup}
         ref={cameraRef}
         style={{flex: 1}}
       />
