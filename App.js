@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, Button} from 'react-native';
 
 import Scanner, {RectangleOverlay} from 'react-native-rectangle-scanner';
 
@@ -67,6 +67,10 @@ const App = () => {
     });
   }
 
+  function handleTakePicture() {
+    cameraRef.current.capture();
+  }
+
   return (
     <View style={{flex: 1}}>
       <Scanner
@@ -75,6 +79,8 @@ const App = () => {
           setDetectedRectangle(detectedRectangle)
         }
         onDeviceSetup={onDeviceSetup}
+        onPictureTaken={event => console.log({event})}
+        capturedQuality={0.6}
         ref={cameraRef}
         style={{flex: 1}}
       />
@@ -92,6 +98,8 @@ const App = () => {
         // onDetectedCapture={this.capture}
         // allowDetection
       />
+
+      <Button title="TAKE PICTURE" onPress={handleTakePicture} />
     </View>
   );
 };
