@@ -13,7 +13,6 @@
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-camera": "^4.2.1",
-    "react-native-document-scanner": "https://github.com/Michaelvilleneuve/react-native-document-scanner",
     "react-native-svg": "^12.3.0"
   },
   "devDependencies": {
