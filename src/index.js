@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react';
 import {View, Dimensions, Button} from 'react-native';
 
 import Scanner, {RectangleOverlay} from 'react-native-rectangle-scanner';
+import PreviewPhoto from './components/PreviewPhoto';
 
 const App = () => {
   const cameraRef = useRef();
@@ -16,9 +17,11 @@ const App = () => {
   });
 
   const [detectedRectangle, setDetectedRectangle] = useState(false);
+  const [image, setImage] = useState('');
 
   function handleOnPictureProcessed(data) {
     console.log({data});
+    setImage(data.croppedImage);
   }
 
   function getPreviewSize() {
@@ -100,6 +103,8 @@ const App = () => {
       />
 
       <Button title="TAKE PICTURE" onPress={handleTakePicture} />
+
+      {!!image && <PreviewPhoto uri={image} />}
     </View>
   );
 };
