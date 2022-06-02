@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Dimensions, Button} from 'react-native';
 
 import Scanner, {RectangleOverlay} from 'react-native-rectangle-scanner';
@@ -18,36 +18,42 @@ const App = () => {
 
   const [detectedRectangle, setDetectedRectangle] = useState(false);
   const [image, setImage] = useState('');
+  const [previewSize, setPreviewSize] = useState(null);
+
+  useEffect(() => {
+    function getPreviewSize() {
+      const dimensions = Dimensions.get('window');
+      // We use set margin amounts because for some reasons the percentage values don't align the camera preview in the center correctly.
+      const heightMargin =
+        ((1 - device.previewHeightPercent) * dimensions.height) / 2;
+      const widthMargin =
+        ((1 - device.previewWidthPercent) * dimensions.width) / 2;
+      if (dimensions.height > dimensions.width) {
+        // Portrait
+        setPreviewSize({
+          height: device.previewHeightPercent,
+          width: device.previewWidthPercent,
+          marginTop: heightMargin,
+          marginLeft: widthMargin,
+        });
+        return;
+      }
+
+      // Landscape
+      setPreviewSize({
+        width: device.previewHeightPercent,
+        height: device.previewWidthPercent,
+        marginTop: widthMargin,
+        marginLeft: heightMargin,
+      });
+    }
+
+    getPreviewSize();
+  }, [device]);
 
   function handleOnPictureProcessed(data) {
     console.log({data});
     setImage(data.croppedImage);
-  }
-
-  function getPreviewSize() {
-    const dimensions = Dimensions.get('window');
-    // We use set margin amounts because for some reasons the percentage values don't align the camera preview in the center correctly.
-    const heightMargin =
-      ((1 - device.previewHeightPercent) * dimensions.height) / 2;
-    const widthMargin =
-      ((1 - device.previewWidthPercent) * dimensions.width) / 2;
-    if (dimensions.height > dimensions.width) {
-      // Portrait
-      return {
-        height: device.previewHeightPercent,
-        width: device.previewWidthPercent,
-        marginTop: heightMargin,
-        marginLeft: widthMargin,
-      };
-    }
-
-    // Landscape
-    return {
-      width: device.previewHeightPercent,
-      height: device.previewWidthPercent,
-      marginTop: widthMargin,
-      marginLeft: heightMargin,
-    };
   }
 
   function onDeviceSetup(deviceDetails) {
@@ -78,8 +84,8 @@ const App = () => {
     <View style={{flex: 1}}>
       <Scanner
         onPictureProcessed={handleOnPictureProcessed}
-        onRectangleDetected={({detectedRectangle}) =>
-          setDetectedRectangle(detectedRectangle)
+        onRectangleDetected={({detectedRectangle: detectedRectangleScanner}) =>
+          setDetectedRectangle(detectedRectangleScanner)
         }
         onDeviceSetup={onDeviceSetup}
         onPictureTaken={event => console.log({event})}
@@ -90,9 +96,10 @@ const App = () => {
 
       <RectangleOverlay
         detectedRectangle={detectedRectangle}
-        previewRatio={getPreviewSize()}
-        backgroundColor="rgba(255,181,6, 0.2)"
-        borderColor="rgb(255,181,6)"
+        previewRatio={previewSize}
+        backgroundColor="transparent"
+        // backgroundColor="rgba(255,181,6, 0.2)"
+        borderColor="blue"
         borderWidth={4}
         // == These let you auto capture and change the overlay style on detection ==
         // detectedBackgroundColor="rgba(255,181,6, 0.3)"
