@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:clean": "cd android && ./gradlew clean",
+    "android:release": "cd android/ && ./gradlew assembleRelease && echo android/app/build/outputs/apk/release/app-release.apk",
+    "android:abb": "cd android/ && ./gradlew bundleRelease && echo android/app/build/outputs/bundle/release/app-release.aab",
+    "android:staging": "jest ./src/__test__/staging.spec.js && cd android/ && ./gradlew assembleReleaseStaging && echo android/app/build/outputs/apk/releaseStaging/app-releaseStaging.apk",
+    "android:abb:staging": "jest ./src/__test__/staging.spec.js && cd android/ && ./gradlew bundleReleaseStaging && echo android/app/build/outputs/bundle/releaseStaging/app-releaseStaging.aab",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
