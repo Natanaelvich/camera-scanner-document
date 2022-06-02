@@ -19,6 +19,7 @@ const App = () => {
   const [detectedRectangle, setDetectedRectangle] = useState(false);
   const [image, setImage] = useState('');
   const [previewSize, setPreviewSize] = useState(null);
+  const [onTakingPhoto, setOnTakingPhoto] = useState(false);
 
   useEffect(() => {
     function getPreviewSize() {
@@ -52,8 +53,12 @@ const App = () => {
   }, [device]);
 
   function handleOnPictureProcessed(data) {
-    console.log({data});
     setImage(data.croppedImage);
+    setOnTakingPhoto(true);
+
+    setTimeout(() => {
+      setOnTakingPhoto(false);
+    }, 1000);
   }
 
   function onDeviceSetup(deviceDetails) {
@@ -82,17 +87,19 @@ const App = () => {
 
   return (
     <View style={{flex: 1}}>
-      <Scanner
-        onPictureProcessed={handleOnPictureProcessed}
-        onRectangleDetected={({detectedRectangle: detectedRectangleScanner}) =>
-          setDetectedRectangle(detectedRectangleScanner)
-        }
-        onDeviceSetup={onDeviceSetup}
-        onPictureTaken={event => console.log({event})}
-        capturedQuality={0.6}
-        ref={cameraRef}
-        style={{flex: 1}}
-      />
+      {!onTakingPhoto && (
+        <Scanner
+          onPictureProcessed={handleOnPictureProcessed}
+          onRectangleDetected={({
+            detectedRectangle: detectedRectangleScanner,
+          }) => setDetectedRectangle(detectedRectangleScanner)}
+          onDeviceSetup={onDeviceSetup}
+          onPictureTaken={event => console.log({event})}
+          capturedQuality={0.6}
+          ref={cameraRef}
+          style={{flex: 1}}
+        />
+      )}
 
       <RectangleOverlay
         detectedRectangle={detectedRectangle}
